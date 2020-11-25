@@ -1,4 +1,4 @@
 # Auto Scraper
 
-NextJS + Typescript
+NextJS + Typescript + GitHub Actions
 

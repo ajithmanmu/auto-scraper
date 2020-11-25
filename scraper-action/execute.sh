@@ -1,3 +1,5 @@
+#!/bin/sh -l
+
 array=( aston-martin audi bentley bmw citroen datsun ferrari force ford great-wall haima honda hyundai isuzu jaguar jeep kia lamborghini land-rover lexus mahindra maruti-suzuki maserati mercedes-benz mg mini mitsubishi nissan porsche renault rolls-royce skoda tata toyota volkswagen volvo )
 now=$(date)
 echo "Script started for date: $now"
