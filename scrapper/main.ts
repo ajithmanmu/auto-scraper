@@ -1,41 +1,9 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { overviewValidator } from './interface/auto';
+import { overviewValidator } from '../interfaces/auto';
 import { queryDOM } from './query';
-/**
- * Some predefined delays (in milliseconds).
- */
-// export enum Delays {
-//   Short = 500,
-//   Medium = 2000,
-//   Long = 5000,
-// }
 
-// /**
-//  * Returns a Promise<string> that resolves after given time.
-//  *
-//  * @param {string} name - A name.
-//  * @param {number=} [delay=Delays.Medium] - Number of milliseconds to delay resolution of the Promise.
-//  * @returns {Promise<string>}
-//  */
-// function delayedHello(
-//   name: string,
-//   delay: number = Delays.Medium,
-// ): Promise<string> {
-//   return new Promise((resolve: (value?: string) => void) =>
-//     setTimeout(() => resolve(`Hello, ${name}`), delay),
-//   );
-// }
-
-// // Below are examples of using ESLint errors suppression
-// // Here it is suppressing missing return type definitions for greeter function
-
-// // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-// export async function greeter(name: string) {
-//   return await delayedHello(name, Delays.Long);
-// }
-
-export const execute = async ():any => {
+export const execute = async ():Promise<object> => {
   const url = 'https://www.autocarindia.com/cars/aston-martin';
   const models = await getModels(url);
 
@@ -46,7 +14,7 @@ export const execute = async ():any => {
   const variantUrls = await Promise.all(pendingVariantPromises);
   const urlsToCrawl = variantUrls.concat.apply([], variantUrls);
 
-  const pendingPromises = urlsToCrawl.map(async (url) => {
+  const pendingPromises = urlsToCrawl.map(async (url:any) => {
     const result = await autoScraper(url);
     return result;
   });
@@ -54,7 +22,7 @@ export const execute = async ():any => {
   return resp;
 };
 
-const getModels = async (url) => {
+const getModels = async (url: string):Promise<string[]> => {
   const response = await axios({
     url,
     method: 'GET',
@@ -65,13 +33,13 @@ const getModels = async (url) => {
     }
   });
   const $ = cheerio.load(response.data);
-  const modelUrls = $('div[class="car-box-sec"]').children('.car-box-sec-wrap').children('.car-box-sec-left').map(function() {
-    return $(this).children('a').attr('href').trim();
+  const modelUrls = $('div[class="car-box-sec"]').children('.car-box-sec-wrap').children('.car-box-sec-left').map(function(this: any, _i, _elem) {
+    return $(this)?.children('a')?.attr('href')?.trim();
   }).get();
   return modelUrls;
 };
 
-const getVariants = async (url) => {
+const getVariants = async (url: string):Promise<string[]> => {
   const response = await axios({
     url,
     method: 'GET',
@@ -82,13 +50,13 @@ const getVariants = async (url) => {
     }
   });
   const $ = cheerio.load(response.data);
-  const variantUrls = $('div[class="verdict_fuel"]').children('ul').children('li').map(function() {
-    return $(this).children('.car-name').children('span').children('a').attr('href').trim();
+  const variantUrls = $('div[class="verdict_fuel"]').children('ul').children('li').map(function(this: any, _i, _elem) {
+    return $(this)?.children('.car-name')?.children('span')?.children('a')?.attr('href')?.trim();
   }).get();
   return variantUrls;
 };
 
-const autoScraper = async (url) => {
+const autoScraper = async (url: string) => {
   const response = await axios({
     url,
     method: 'GET',
@@ -101,7 +69,7 @@ const autoScraper = async (url) => {
   const $ = cheerio.load(response.data);
   const heading =  $('h1[class="car-heading"]').text().trim();
   const price = $('div[class="car-price-sec"]  h3').text().trim();
-  const image = $('div[class="model_page_view_left"]  img').attr('src').trim();
+  const image = $('div[class="model_page_view_left"]  img')?.attr('src')?.trim();
 
   // Overview
   let overview:overviewValidator = {};
@@ -167,7 +135,6 @@ const autoScraper = async (url) => {
       instrumentation
     }
   }
-  console.log('auto', auto);
   return auto;
 };
 

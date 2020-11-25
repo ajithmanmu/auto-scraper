@@ -1,9 +1,9 @@
 export const queryDOM = ($: any, element:string, output:any): {output:any} => {
-  $(element).children().each(function() {
+  $(element).children().each(function(this: any, _i: any, _elem: any) {
     // Iterate over each Row
     let overviewField = '';
     let overviewValue = '';
-    $(this).children().each(function() {
+    $(this).children().each(function(this: any, _i: any, _elem: any) {
       let field = null;
       let value = null;
       if($(this).find('span').length > 0) {
