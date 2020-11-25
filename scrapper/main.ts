@@ -3,8 +3,8 @@ import * as cheerio from 'cheerio';
 import { overviewValidator } from '../interfaces/auto';
 import { queryDOM } from './query';
 
-export const execute = async ():Promise<object> => {
-  const url = 'https://www.autocarindia.com/cars/aston-martin';
+export const execute = async (brand:string):Promise<object> => {
+  const url = `https://www.autocarindia.com/cars/${brand}`;
   const models = await getModels(url);
 
   const pendingVariantPromises = models.map(async (url) => {
