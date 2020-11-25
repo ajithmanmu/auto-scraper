@@ -1,6 +1,7 @@
 {
   "singleQuote": true,
   "trailingComma": "all",
+  "useTabs": true,
   "overrides": [
     {
       "files": "*.ts",
