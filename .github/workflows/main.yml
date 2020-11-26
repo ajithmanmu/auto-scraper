@@ -1,8 +1,8 @@
 
-name: A workflow for Scraping the Auto Web
+name: Auto Web Scraper
 on:
     schedule:
-      - cron: "*/2 * * * *"
+      - cron: "*/1 * * * *"
 jobs:
   build:
     name: Auto Scraper
@@ -10,3 +10,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: ./scraper-action
+        
