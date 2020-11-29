@@ -4,7 +4,7 @@ import { overviewValidator } from '../interfaces/auto';
 import { queryDOM } from './query';
 
 export const execute = async (brand:string):Promise<object> => {
-  const url = `https://www.autocarindia.com/cars/${brand}`;
+  const url = `${process.env.HOST_URL}/${brand}`;
   const models = await getModels(url);
 
   const pendingVariantPromises = models.map(async (url) => {
@@ -15,14 +15,14 @@ export const execute = async (brand:string):Promise<object> => {
   const urlsToCrawl = variantUrls.concat.apply([], variantUrls);
 
   const pendingPromises = urlsToCrawl.map(async (url:any) => {
-    const result = await autoScraper(url);
+    const result = await scraper(url);
     return result;
   });
   const resp = await Promise.all(pendingPromises);
   return resp;
 };
 
-const getModels = async (url: string):Promise<string[]> => {
+export const getModels = async (url: string):Promise<string[]> => {
   const response = await axios({
     url,
     method: 'GET',
@@ -36,10 +36,11 @@ const getModels = async (url: string):Promise<string[]> => {
   const modelUrls = $('div[class="car-box-sec"]').children('.car-box-sec-wrap').children('.car-box-sec-left').map(function(this: any, _i, _elem) {
     return $(this)?.children('a')?.attr('href')?.trim();
   }).get();
-  return modelUrls;
+  const result = [... new Set(modelUrls)]; // Remove duplicates
+  return result;
 };
 
-const getVariants = async (url: string):Promise<string[]> => {
+export const getVariants = async (url: string):Promise<string[]> => {
   const response = await axios({
     url,
     method: 'GET',
@@ -53,10 +54,19 @@ const getVariants = async (url: string):Promise<string[]> => {
   const variantUrls = $('div[class="verdict_fuel"]').children('ul').children('li').map(function(this: any, _i, _elem) {
     return $(this)?.children('.car-name')?.children('span')?.children('a')?.attr('href')?.trim();
   }).get();
-  return variantUrls;
+
+  const result = [... new Set(variantUrls)]; // Remove duplicates
+  return result;
 };
 
-const autoScraper = async (url: string) => {
+export const getScrapeUrls = async () => {
+return [{
+  _id: 1,
+  url: 'https://www.autocarindia.com/cars/aston-martin/rapide-s/v12'
+}]
+};
+
+export const scraper = async (url: string) => {
   const response = await axios({
     url,
     method: 'GET',
