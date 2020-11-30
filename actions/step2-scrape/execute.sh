@@ -2,7 +2,7 @@
 
 now=$(date)
 echo "Script started for date: $now"
-for i in {1..1030}
+for i in {1..11}
 do
 	echo "Starting $i"
     # curl -i --write-out "%{http_code}\n" --silent --output /dev/null  --header 'Host: localhost:3000' "http://localhost:3000/api/brands?brand=${i}"
