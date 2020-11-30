@@ -27,3 +27,8 @@ export interface dimensionsValidator {
   Kerb_Weight?: string,
   Boot_Capacity?: string,
 }
+
+export type urlType = {
+  id: string;
+  url: string;
+}

@@ -1,0 +1,13 @@
+
+name: Step 1 - Auto Web Scraper
+on:
+    schedule:
+      - cron: "0 1 * * MON"
+jobs:
+  build:
+    name: Step 1 - Auto Web Scraper
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: ./actions/step1-urls
+        

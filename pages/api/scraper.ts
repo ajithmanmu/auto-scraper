@@ -4,16 +4,17 @@ import { getScrapeUrls } from '../../scrapper/main';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const { secret } = req.query;
+    const { secret, limit=100 } = req.query;
     if(!secret) {
       throw new Error('Required params are missing');
     }
     if(secret !== process.env.SCRAPPER_SECRET) {
       throw new Error('Required params are missing');
     }
-    const urls = await getScrapeUrls();
-    urls.map(({_id, url}) => {
-      const scraperApi = `${process.env.API_URL}/scrape/${_id}`;
+    const urls = await getScrapeUrls(Number(limit));
+    console.log('url length', urls.length);
+    urls.map(({id, url}) => {
+      const scraperApi = `${process.env.API_URL}/scrape/${id}`;
       const data = { url };
       axios({
         url:scraperApi,
