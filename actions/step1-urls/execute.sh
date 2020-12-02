@@ -11,9 +11,9 @@ for i in "${array[@]}"
 do
 	echo "Starting $i"
     # curl -i --write-out "%{http_code}\n" --silent --output /dev/null  --header 'Host: localhost:3000' "http://localhost:3000/api/brands?brand=${i}"
-    curl -i --write-out "%{http_code}\n" --silent --output /dev/null  --header 'Host: auto-scraper.vercel.app' "https://auto-scraper.vercel.app/api/brands?brand=${i}"
+    # curl -i --write-out "%{http_code}\n" --silent --output /dev/null  --header 'Host: auto-scraper.vercel.app' "https://auto-scraper.vercel.app/api/brands?brand=${i}"
     echo "Completed $i"
-    sleep 10
+    # sleep 10
 done
 echo "Script completed for date: $now"
 exit
