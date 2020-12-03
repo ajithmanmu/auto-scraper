@@ -2,7 +2,7 @@
 name: Step 2 - Auto Web Scraper
 on:
     schedule:
-      - cron: "15 0 * * THU"
+      - cron: "00 2 * * THU"
 jobs:
   build:
     name: Step 2 - Auto Web Scraper
