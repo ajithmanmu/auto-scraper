@@ -60,10 +60,10 @@ export const getVariants = async (url: string):Promise<string[]> => {
   return result;
 };
 
-export const getScrapeUrls = async (limit:number):Promise<urlType[]> => {
+export const getScrapeUrls = async (limit:number, completed: Boolean):Promise<urlType[]> => {
   try {
     const snapshot = await db.collection('urls')
-      .where('completed', '==', false)
+      .where('completed', '==', completed)
       .limit(limit)
       .get();
       const urls:any = [];
