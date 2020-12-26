@@ -1,51 +1,45 @@
-import {
-    Page,
-    Text,
-    View,
-    Document,
-    StyleSheet,
-    Image
-  } from "@react-pdf/renderer";
+// import {
+//     StyleSheet,
+//   } from "@react-pdf/renderer";
 
-  const styles = StyleSheet.create({
-    page: {
-      backgroundColor: "#ffffff"
-    },
-    header: {
-        margin: 10,
-        padding: 10,
-        // flexGrow: 1
-    },
-    header__text: {
-        fontSize: 15
-    },
-    container: {
-        margin: 10,
-        padding: 10,
-        // flexGrow: 1,
-        flexDirection: 'row',
-        alignContent: 'center',
-        justifyContent: 'center'
-    },
-    image: {
-        height: 200,
-        width: 150
-    },
-    overviewCard: {
-        flexDirection: 'column',
-        alignContent: 'center',
-        justifyContent: 'center'
-    },
-    text__name : {
-        fontSize: 12
-    },
-    text__type :{
-        fontSize: 10
-    }
-  });
+//   const styles = StyleSheet.create({
+//     page: {
+//       backgroundColor: "#ffffff"
+//     },
+//     header: {
+//         margin: 10,
+//         padding: 10,
+//         // flexGrow: 1
+//     },
+//     header__text: {
+//         fontSize: 15
+//     },
+//     container: {
+//         margin: 10,
+//         padding: 10,
+//         // flexGrow: 1,
+//         flexDirection: 'row',
+//         alignContent: 'center',
+//         justifyContent: 'center'
+//     },
+//     image: {
+//         height: 200,
+//         width: 150
+//     },
+//     overviewCard: {
+//         flexDirection: 'column',
+//         alignContent: 'center',
+//         justifyContent: 'center'
+//     },
+//     text__name : {
+//         fontSize: 12
+//     },
+//     text__type :{
+//         fontSize: 10
+//     }
+//   });
   
-const Spec = ({spec}) => {
-    console.log('spec', spec);
+const Spec = ({spec}:any) => {
     return (
         <div className="md:container md:mx-auto">
             <div className="flex flex-row ...">

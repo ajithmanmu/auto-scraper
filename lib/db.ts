@@ -1,6 +1,6 @@
 import { db } from '../lib/firebase-admin';
 
-export const getAllUids = async() => {
+export const getAllUids = async():Promise<any[]> => {
     try {
         const snapshot = await db
         .collection('autodata')
@@ -12,11 +12,11 @@ export const getAllUids = async() => {
         const results = [...new Set(uniqueSpecIdsArray.map((item: { uid: any; }) => item.uid))];
         return results;
     } catch (error) {
-        return { error };
+        return error;
     }
 };
 
-export const getSpec = async(uid:string) => {
+export const getSpec = async(uid:any):Promise<string> => {
     try {
         const snapshot = await db
         .collection('autodata')
@@ -28,6 +28,6 @@ export const getSpec = async(uid:string) => {
         });
         return JSON.stringify(specsArray); // Hack for timestamp issue with getStaticProps
     } catch (error) {
-        return { error };
+        return error;
     }
 };

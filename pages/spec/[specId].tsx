@@ -3,7 +3,7 @@ import { getAllUids, getSpec } from '../../lib/db';
 import Loading from '../../components/Loading';
 import Error from '../../components/Error';
 
-const SpecPage = ({ spec, errors }) => {
+const SpecPage = ({ spec, errors }: any) => {
     if(errors) return <Error />;
     if(!spec) return <Loading />;
     const imageStyle = {
@@ -33,7 +33,7 @@ const SpecPage = ({ spec, errors }) => {
                 <div className="bg-white shadow overflow-hidden sm:rounded-md lg:mx-8">
                   <ul className="divide-y divide-gray-200">
                     {
-                      Object.entries(spec.overview).map(([key, value]) => {
+                      Object.entries(spec.overview).map(([key, value]:any) => {
                         if(!value) return null;
                         return <li>
                                   <a className="block hover:bg-gray-50">
@@ -67,21 +67,21 @@ export default SpecPage;
 
 export const getStaticPaths: GetStaticPaths = async () => {
     const data = await getAllUids();
-    const paths = data.map((uid:string)=>({
+    const paths = data.map((specId:string)=>({
         params: {
-            uid
+          specId:specId.toString()
         }
     }));
     return {
-        paths,
-        fallback: true,
-    }
+      paths,
+      fallback: true
+    };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    const { uid } = params;
-    const result = await getSpec(uid);
+    const specId = context?.params?.specId;
+    const result = await getSpec(specId);
     const spec = JSON.parse(result)[0];
     return { props: { spec }, revalidate: 1 }
   } catch (err) {
