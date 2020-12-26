@@ -13,12 +13,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .where('make', '==', make)
       .where('model', '==', model)
       .get();
-    const specsArray:any = [];
+    const modelArray:any = [];
     snapshot.forEach((doc) => {
-      specsArray.push({ id: doc.id, ...doc.data() });
+      modelArray.push({ id: doc.id, ...doc.data() });
     });
-    // const result = [...new Set(modelArray.map((item: { model: any; }) => item.model))];
-    res.status(200).json(specsArray);
+    const result = [...new Set(modelArray.map((item: { uid: any; }) => item.uid))];
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message })
   }

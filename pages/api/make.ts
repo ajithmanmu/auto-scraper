@@ -5,14 +5,14 @@ import { db } from '../../lib/firebase-admin';
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
     const snapshot = await db
-      .collection('autodata')
+      .collection('make')
       .get();
     const makeArray:any = [];
     snapshot.forEach((doc) => {
         makeArray.push({ id: doc.id, ...doc.data() });
     });
-    const result = [...new Set(makeArray.map((item: { make: any; }) => item.make))];
-    res.status(200).json(result);
+    // const result = [...new Set(makeArray.map((item: { make: any; }) => item.make))];
+    res.status(200).json(makeArray);
   } catch (err) {
     res.status(500).json({ statusCode: 500, message: err.message })
   }
