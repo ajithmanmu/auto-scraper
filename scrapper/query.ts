@@ -1,4 +1,22 @@
-export const queryDOM = ($: any, element:string, output:any): {output:any} => {
+import { 
+  overviewValidator, 
+  dimensionsValidator, 
+  engineMotorValidator, 
+  transmissionValidator, 
+  fuelEconomyRangeValidator, 
+  suspensionValidator,
+  steeringValidator,
+  wheelsValidator,
+  brakesValidator,
+  safetyValidator,
+  exteriorValidator,
+  upholsteryValidator,
+  infotainmentValidator,
+  comfortValidator,
+  instrumentationValidator,
+ } from '../interfaces/auto';
+
+export const queryDOM = ($: any, element:string, output:overviewValidator|dimensionsValidator|engineMotorValidator|transmissionValidator|fuelEconomyRangeValidator|suspensionValidator|steeringValidator|wheelsValidator|brakesValidator|safetyValidator|exteriorValidator|upholsteryValidator|infotainmentValidator|comfortValidator|instrumentationValidator): overviewValidator|dimensionsValidator|engineMotorValidator|transmissionValidator|fuelEconomyRangeValidator|suspensionValidator|steeringValidator|wheelsValidator|brakesValidator|safetyValidator|exteriorValidator|upholsteryValidator|infotainmentValidator|comfortValidator|instrumentationValidator => {
   $(element).children().each(function(this: any, _i: any, _elem: any) {
     // Iterate over each Row
     let overviewField = '';

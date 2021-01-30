@@ -1,6 +1,24 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { overviewValidator, urlType } from '../interfaces/auto';
+import { 
+  overviewValidator, 
+  urlType, 
+  dimensionsValidator, 
+  engineMotorValidator, 
+  transmissionValidator, 
+  fuelEconomyRangeValidator, 
+  suspensionValidator,
+  steeringValidator,
+  wheelsValidator,
+  brakesValidator,
+  safetyValidator,
+  exteriorValidator,
+  upholsteryValidator,
+  infotainmentValidator,
+  comfortValidator,
+  instrumentationValidator,
+  autoDataValidator,
+ } from '../interfaces/auto';
 import { queryDOM } from './query';
 import { db } from '../lib/firebase-admin';
 
@@ -76,7 +94,7 @@ export const getScrapeUrls = async (limit:number, completed: Boolean):Promise<ur
   }
 };
 
-export const scraper = async (url: string):Promise<any> => {
+export const scraper = async (url: string):Promise<{uid:string, data:autoDataValidator}| undefined> => {
   try {
     const response = await axios({
       url,
@@ -87,14 +105,14 @@ export const scraper = async (url: string):Promise<any> => {
         'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
       }
     });
-    const $ = cheerio.load(response.data);
-    const heading =  $('h1[class="car-heading"]').text().trim();
-    const price = $('div[class="car-price-sec"]  h3').text().trim();
-    const image = $('div[class="model_page_view_left"]  img')?.attr('src')?.trim();
-    const make = $('#HdnMakeForAD')?.attr('value')?.trim();
-    const model = $('#HdnModel')?.attr('value')?.trim();
-    const variant = $('#HdncarvariantAD')?.attr('value')?.trim();
-    const type = $('#HdncartypeAD')?.attr('value')?.trim();
+    const $:any = cheerio.load(response.data);
+    const heading:string =  $('h1[class="car-heading"]').text().trim();
+    const price:string = $('div[class="car-price-sec"]  h3').text().trim();
+    const image:string = $('div[class="model_page_view_left"]  img')?.attr('src')?.trim();
+    const make:string = $('#HdnMakeForAD')?.attr('value')?.trim();
+    const model:string = $('#HdnModel')?.attr('value')?.trim();
+    const variant:string = $('#HdncarvariantAD')?.attr('value')?.trim();
+    const type:string = $('#HdncartypeAD')?.attr('value')?.trim();
 
     // Overview
     let overview:overviewValidator = {};
@@ -105,39 +123,39 @@ export const scraper = async (url: string):Promise<any> => {
     };
 
     // Specs
-    let dimensions:any = {};
+    let dimensions:dimensionsValidator = {};
     dimensions = queryDOM($, '#accordion1_1', dimensions);
-    let engineMotor:any = {};
+    let engineMotor:engineMotorValidator = {};
     engineMotor = queryDOM($, '#accordion1_2', engineMotor);
-    let transmission:any = {};
+    let transmission:transmissionValidator = {};
     transmission = queryDOM($, '#accordion1_4', transmission);
-    let fuelEconomyRange:any = {};
+    let fuelEconomyRange:fuelEconomyRangeValidator = {};
     fuelEconomyRange = queryDOM($, '#accordion1_5', fuelEconomyRange);
-    let suspension:any = {};
+    let suspension:suspensionValidator = {};
     suspension = queryDOM($, '#accordion1_6', suspension);
-    let steering:any = {};
+    let steering:steeringValidator = {};
     steering = queryDOM($, '#accordion1_3', steering);
-    let wheels:any = {};
+    let wheels:wheelsValidator = {};
     wheels = queryDOM($, '#accordion1_7', wheels);
-    let brakes:any = {};
+    let brakes:brakesValidator = {};
     brakes = queryDOM($, '#accordion1_8', brakes);
 
     // Safety and Features
-    let safety:any = {};
+    let safety:safetyValidator = {};
     safety = queryDOM($, '#features1', safety);
-    let exterior:any = {};
+    let exterior:exteriorValidator = {};
     exterior = queryDOM($, '#features2', exterior);
-    let upholstery:any = {};
+    let upholstery:upholsteryValidator = {};
     upholstery = queryDOM($, '#features3', upholstery);
-    let infotainment:any = {};
+    let infotainment:infotainmentValidator = {};
     infotainment = queryDOM($, '#features4', infotainment);
-    let comfort:any = {};
+    let comfort:comfortValidator = {};
     comfort = queryDOM($, '#features5', comfort);
-    let instrumentation:any = {};
+    let instrumentation:instrumentationValidator = {};
     instrumentation = queryDOM($, '#features6', instrumentation);
 
     const uid = `${heading}-${variant}`
-    const data = {
+    const data: autoDataValidator = {
       make,
       model,
       variant,
@@ -186,6 +204,7 @@ export const scraper = async (url: string):Promise<any> => {
 }
   catch (err) {
     console.log('err', err);
+    return err;
   }
 };
 
