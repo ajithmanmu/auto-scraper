@@ -6,7 +6,6 @@ import Error from '../../components/Error';
 const SpecPage = ({ spec, errors }: any) => {
     if(errors) return <Error />;
     if(!spec) return <Loading />;
-    console.log('spec', spec);
     const imageStyle = {
       backgroundImage: `url(${spec.image})`,
     };

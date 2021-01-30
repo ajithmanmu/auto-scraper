@@ -94,7 +94,7 @@ export const getScrapeUrls = async (limit:number, completed: Boolean):Promise<ur
   }
 };
 
-export const scraper = async (url: string):Promise<{uid:string, data:autoDataValidator}| undefined> => {
+export const scraper = async (url: string):Promise<{uid:string, data:autoDataValidator}> => {
   try {
     const response = await axios({
       url,
