@@ -5,7 +5,8 @@
     "dev": "next -p 5001",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "scrape": "node ./scrapper/usedvehicle.ts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^2.0.4",
@@ -13,6 +14,7 @@
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.6",
+    "csv-writer": "^1.6.0",
     "firebase-admin": "^9.6.0",
     "lodash": "^4.17.21",
     "next": "latest",
